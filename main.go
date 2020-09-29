@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"./controllers"
-	"./models"
+	"github.com/csepulvedaz/FroidPromedios/controllers"
+	"github.com/csepulvedaz/FroidPromedios/models"
 )
 
 func main() {

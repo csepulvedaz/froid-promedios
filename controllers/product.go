@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"../models"
+	"github.com/csepulvedaz/FroidPromedios/models"
 )
 
 func getTask(w http.ResponseWriter, r *http.Request) {
