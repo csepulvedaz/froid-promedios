@@ -6,8 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
-
-	"github.com/csepulvedaz/FroidPromedios/models"
 )
 
 func getTask(w http.ResponseWriter, r *http.Request) {
@@ -19,7 +17,7 @@ func getTask(w http.ResponseWriter, r *http.Request) {
 func PostProductController(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	stmt, err := models.GetDB().Prepare("INSERT INTO supermarket_ms_product(name, description, unit_measurement, quantity, category_id) VALUES(?, ?, ?, ?, ?)")
+	stmt, err := GetDB().Prepare("INSERT INTO supermarket_ms_product(name, description, unit_measurement, quantity, category_id) VALUES(?, ?, ?, ?, ?)")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -41,6 +39,5 @@ func PostProductController(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Println("map:", keyVal)
 	fmt.Fprintf(w, "New product was created")
 }
