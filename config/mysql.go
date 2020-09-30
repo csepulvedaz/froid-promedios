@@ -1,16 +1,18 @@
-package controllers
+package config
 
 import (
 	"database/sql"
+	"fmt"
 
 	//Database driver import
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var (
-	// DB The database connection
-	db  *sql.DB
-	err error
+const (
+	username = "admin"
+	password = "Tesla2119"
+	hostname = "supermarket-db.clv7vchexipa.us-east-1.rds.amazonaws.com:3306"
+	dbname   = "froid_historia_academica_db"
 	// user     = os.Getenv("DB_USER")
 	// password = os.Getenv("DB_PASSWORD")
 	// enpoint  = os.Getenv("DB_ENDPOINT")
@@ -18,11 +20,15 @@ var (
 	// name     = os.Getenv("DB_NAME")
 )
 
-// Setup Sets up the many many app settings
-func Setup() {
-	// d, err := sql.Open("mysql", "admin:Tesla2119@tcp(supermarket-db.clv7vchexipa.us-east-1.rds.amazonaws.com:3306)/supermarket-db")
-	d, err := sql.Open("mysql", "csepulvedaz:Camilo1015$@tcp(arquisoftlab2.ctapo3sygnnp.us-east-1.rds.amazonaws.com:3306)/supermarket_db")
-	// d, err := sql.Open("mysql", user+":"+password+"@tcp("+enpoint+":"+port+")/"+name)
+var (
+	db  *sql.DB
+	err error
+)
+
+// Connect db
+func Connect() {
+	d, err := sql.Open("mysql", confMysql(dbname))
+
 	if err != nil {
 		panic(err.Error())
 	}
@@ -37,4 +43,8 @@ func GetDB() *sql.DB {
 // CloseDB close the database conection
 func CloseDB() error {
 	return db.Close()
+}
+
+func confMysql(dbName string) string {
+	return fmt.Sprintf("%s:%s@tcp(%s)/%s", username, password, hostname, dbName)
 }
