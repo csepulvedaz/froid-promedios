@@ -1,11 +1,9 @@
 package service
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
+	"strconv"
 
-	"github.com/csepulvedaz/FroidPromedios/models"
 	"github.com/csepulvedaz/FroidPromedios/repository"
 	"github.com/csepulvedaz/FroidPromedios/utils"
 
@@ -17,23 +15,22 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var viewedSubjectPost models.ViewedSubjectPost
-var viewedSubjects models.ViewedSubjects
+// SiaGuy advance
+func SiaGuy(w http.ResponseWriter, r *http.Request) {
+	idUsuario := r.FormValue("id_usuario")
+	id, err := strconv.Atoi(idUsuario)
 
-//CreateViewedSubjects ...
-func CreateViewedSubjects(w http.ResponseWriter, r *http.Request) {
-
-	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		panic(err.Error())
-	}
-
-	json.Unmarshal([]byte(body), &viewedSubjectPost)
-
-	user, err := repository.CreateViewedSubjects(viewedSubjectPost)
-	if err != nil {
-		utils.ResponseWithError(w, http.StatusConflict, err.Error())
+		utils.ResponseWithError(w, http.StatusBadRequest, err.Error())
 		return
 	}
-	utils.ResponseWithJSON(w, http.StatusCreated, user)
+
+	siaGuy, err := repository.GetSiaGuy(id)
+
+	if err != nil {
+		utils.ResponseWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	utils.ResponseWithJSON(w, http.StatusOK, siaGuy)
 }

@@ -18,8 +18,15 @@ func Routes() *mux.Router {
 
 	//Routes
 	r.HandleFunc("/", indexRouteController)
+	//Subject
 	r.HandleFunc("/subject", service.GetSubjects).Methods("GET")
-	r.HandleFunc("/subject/viewed", service.CreateViewedSubjects).Methods("POST")
+	r.HandleFunc("/subject/{id}", service.GetSubjectByID).Methods("GET")
+	r.HandleFunc("/subject", service.UpdateSubject).Methods("PUT")
+	//Averages
+	r.HandleFunc("/average/pa", service.PA).Methods("GET")
+	r.HandleFunc("/average/papa", service.PAPA).Methods("GET")
+	r.HandleFunc("/average/pappi", service.PAPPI).Methods("GET")
+	r.HandleFunc("/sia-guy", service.SiaGuy).Methods("GET")
 
 	return r
 }
