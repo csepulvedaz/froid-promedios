@@ -3,26 +3,19 @@ package config
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	//Database driver import
 	_ "github.com/go-sql-driver/mysql"
 )
 
-const (
-	username = "admin"
-	password = "Tesla2119"
-	hostname = "supermarket-db.clv7vchexipa.us-east-1.rds.amazonaws.com:3306"
-	dbname   = "froid_historia_academica_db"
-	// user     = os.Getenv("DB_USER")
-	// password = os.Getenv("DB_PASSWORD")
-	// enpoint  = os.Getenv("DB_ENDPOINT")
-	// port     = os.Getenv("DB_PORT")
-	// name     = os.Getenv("DB_NAME")
-)
-
 var (
-	db  *sql.DB
-	err error
+	username = os.Getenv("DB_USER")
+	password = os.Getenv("DB_PASSWORD")
+	hostname = os.Getenv("DB_HOST")
+	dbname   = os.Getenv("DB_NAME")
+	db       *sql.DB
+	err      error
 )
 
 // Connect db
