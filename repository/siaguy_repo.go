@@ -18,10 +18,11 @@ import (
 func GetSiaGuy(id int) (float64, error) {
 	db := config.GetDB()
 
+	var advance float64
 	var approved, total float64
 	var auxA, auxT sql.NullFloat64
 
-	a, err := db.Query("SELECT SUM(creditos) AS creditos_aprobados FROM froid_historia_academica_db.vista_materias WHERE nota >= 3.0")
+	a, err := db.Query("SELECT SUM(creditos) AS creditos_aprobados FROM froid_historia_academica_db.vista_materias WHERE nota >= 3.0 AND id_usuario =?", id)
 	if err != nil {
 		log.Println("Error query user: " + err.Error())
 		return approved, err
@@ -35,7 +36,7 @@ func GetSiaGuy(id int) (float64, error) {
 		}
 	}
 
-	t, err := db.Query(`SELECT SUM(creditos) AS total_creditos FROM froid_historia_academica_db.vista_materias WHERE tipologia != "Fantasma"`)
+	t, err := db.Query(`SELECT SUM(creditos) AS total_creditos FROM froid_historia_academica_db.vista_materias WHERE tipologia != "Fantasma" AND id_usuario =?`, id)
 	if err != nil {
 		log.Println("Error query user: " + err.Error())
 		return total, err
@@ -49,7 +50,9 @@ func GetSiaGuy(id int) (float64, error) {
 		}
 	}
 
-	advance := (approved / total) * 100
+	if approved != 0 && total != 0 {
+		advance = (approved / total) * 100
+	}
 
 	return advance, nil
 }

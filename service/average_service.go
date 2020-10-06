@@ -2,6 +2,7 @@ package service
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/csepulvedaz/FroidPromedios/repository"
 	"github.com/csepulvedaz/FroidPromedios/utils"
@@ -17,7 +18,15 @@ import (
 // PA calculate
 func PA(w http.ResponseWriter, r *http.Request) {
 
-	pa, err := repository.PA()
+	idUsuario := r.FormValue("id_usuario")
+	id, err := strconv.Atoi(idUsuario)
+
+	if err != nil {
+		utils.ResponseWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	pa, err := repository.PA(id)
 
 	if err != nil {
 		utils.ResponseWithError(w, http.StatusBadRequest, err.Error())
@@ -29,7 +38,15 @@ func PA(w http.ResponseWriter, r *http.Request) {
 
 // PAPA calculate
 func PAPA(w http.ResponseWriter, r *http.Request) {
-	papa, err := repository.PAPA()
+	idUsuario := r.FormValue("id_usuario")
+	id, err := strconv.Atoi(idUsuario)
+
+	if err != nil {
+		utils.ResponseWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	papa, err := repository.PAPA(id)
 
 	if err != nil {
 		utils.ResponseWithError(w, http.StatusBadRequest, err.Error())
@@ -42,7 +59,16 @@ func PAPA(w http.ResponseWriter, r *http.Request) {
 // PAPPI calculate
 func PAPPI(w http.ResponseWriter, r *http.Request) {
 	semestre := r.FormValue("semestre")
-	pappi, err := repository.PAPPI(semestre)
+	idUsuario := r.FormValue("id_usuario")
+
+	id, err := strconv.Atoi(idUsuario)
+
+	if err != nil {
+		utils.ResponseWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	pappi, err := repository.PAPPI(semestre, id)
 
 	if err != nil {
 		utils.ResponseWithError(w, http.StatusBadRequest, err.Error())

@@ -16,13 +16,13 @@ import (
 )
 
 // PA ...
-func PA() (float64, error) {
+func PA(id int) (float64, error) {
 	db := config.GetDB()
 
 	var pa float64
 	var aux sql.NullFloat64
 
-	result, err := db.Query("SELECT AVG(nota) FROM froid_historia_academica_db.vista_materias WHERE nota >= 3.0")
+	result, err := db.Query("SELECT AVG(nota) FROM froid_historia_academica_db.vista_materias WHERE nota >= 3.0 AND id_usuario =?", id)
 	if err != nil {
 		log.Println("Error query user: " + err.Error())
 		return pa, err
@@ -42,13 +42,13 @@ func PA() (float64, error) {
 }
 
 // PAPA ...
-func PAPA() (float64, error) {
+func PAPA(id int) (float64, error) {
 	db := config.GetDB()
 
 	var papa float64
 	var aux sql.NullFloat64
 
-	result, err := db.Query("SELECT SUM(creditos*nota)/SUM(creditos) FROM froid_historia_academica_db.vista_materias WHERE nota >= 0.0")
+	result, err := db.Query("SELECT SUM(creditos*nota)/SUM(creditos) FROM froid_historia_academica_db.vista_materias WHERE nota >= 0.0 AND id_usuario =?", id)
 	if err != nil {
 		log.Println("Error query user: " + err.Error())
 		return papa, err
@@ -67,13 +67,13 @@ func PAPA() (float64, error) {
 }
 
 //PAPPI ...
-func PAPPI(sem string) (float64, error) {
+func PAPPI(sem string, id int) (float64, error) {
 	db := config.GetDB()
 
 	var pappi float64
 	var aux sql.NullFloat64
 
-	result, err := db.Query("SELECT SUM(creditos*nota)/SUM(creditos) FROM froid_historia_academica_db.vista_materias WHERE nota >= 0.0 AND semestre =?", sem)
+	result, err := db.Query("SELECT SUM(creditos*nota)/SUM(creditos) FROM froid_historia_academica_db.vista_materias WHERE nota >= 0.0 AND semestre =? AND id_usuario =?", sem, id)
 	if err != nil {
 		log.Println("Error query user: " + err.Error())
 		return pappi, err
