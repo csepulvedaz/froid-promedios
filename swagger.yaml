@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "This is a sample the description of the classroom managment microservice from Grader app "
+  description: "This is a sample the description of the averages microservice from Froid app"
   version: "1.0.0"
   title: "Averages"
 tags:
