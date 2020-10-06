@@ -1,0 +1,166 @@
+swagger: "2.0"
+info:
+  description: "This is a sample the description of the classroom managment microservice from Grader app "
+  version: "1.0.0"
+  title: "Averages"
+tags:
+  - name: "subjects"
+  - name: "averages"
+  - name: "sia guy"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /subject:
+    put:
+      tags:
+        - "subjects"
+      summary: "Modify a subject"
+      operationId: "modifySubject"
+      produces:
+        - "boolean"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Modify a subject grade"
+          required: true
+          schema:
+            $ref: "#/definitions/SubjectPut"
+      responses:
+        default:
+          description: "successful operation"
+    get:
+      tags:
+        - "subjects"
+      summary: "get all subjects"
+      operationId: "GetAllSubjects"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        default:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Subject"
+
+  /subject/{id}:
+    get:
+      tags:
+        - "subjects"
+      summary: "get subject by id"
+      operationId: "GetSubjectByID"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "The subject id"
+          required: true
+          type: "number"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Subject"
+
+  /average/pa:
+    get:
+      tags:
+        - "averages"
+      summary: "get PA average"
+      operationId: "GetPaAverage"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Average"
+
+  /average/papa:
+    get:
+      tags:
+        - "averages"
+      summary: "get PAPA average"
+      operationId: "GetPapaAverage"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Average"
+
+  /average/pappi:
+    get:
+      tags:
+        - "averages"
+      summary: "get PAPPI average"
+      operationId: "GetPappiAverage"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Average"
+
+  /sia-guy:
+    get:
+      tags:
+        - "sia guy"
+      summary: "get sia guy advance"
+      operationId: "GetSiaGuyAdvance"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Average"
+
+definitions:
+  Subject:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int8"
+      id_usuario:
+        type: "integer"
+        format: "int8"
+      semestre:
+        type: "string"
+      tipologia:
+        type: "string"
+      nombre:
+        type: "string"
+      prerequisitos:
+        type: "string"
+      creditos:
+        type: "number"
+      nota:
+        type: "number"
+    xml:
+      name: "Subject"
+
+  SubjectPut:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int8"
+      id_semestre:
+        type: "integer"
+        format: "int8"
+      nota:
+        type: "number"
+    xml:
+      name: "Subject"
+  Average:
+    type: "number"
